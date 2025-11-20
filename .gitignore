@@ -138,8 +138,6 @@ api/coverage/
 .gradle
 *.local.json
 *.local.md
-.claude
-.mcp.json
 .playwright-mcp
 .project
 local.properties
