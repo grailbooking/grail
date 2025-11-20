@@ -223,10 +223,13 @@ yarn-error.log*
 next-env.d.ts
 
 # TypeScript compiled output
+packages/*/dist/**/*
 packages/*/dist/**/*.js
 packages/*/dist/**/*.d.ts
 packages/*/dist/**/*.js.map
 packages/*/dist/**/*.d.ts.map
+packages/*/out
+packages/*/out/**/*
 
 # database files
 packages/database/prisma/dev.db
@@ -246,3 +249,4 @@ packages/database/prisma/dev.db-journal
 packages/worker/certs/
 
 src/examples/
+packages/widget/dist/

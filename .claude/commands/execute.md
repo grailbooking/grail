@@ -8,6 +8,6 @@ Go step by step. Run all lint checks, build checks, type checks and unit tests o
 
 When you're done implementing, do one final pass of all lint checks, build checks, type checks and unit tests across the entire codebase. Be sure to run these in one-time mode and not watch mode, so you don't get stuck. Load up the web app in the browser using MCP Playwright and navigating around the app checking for critical console errors.  Write elegant code to make any final corrections to any new errors and critical warnings that you find.
 
-As a reminder, do not start API or UI servers in the background. The local API and UI dev services are already running, and you can tail the logs at api.log and ui.log, as needed. The executor subagent can manually verify changes are working at http://localhost:5173 with MCP Playwright.
+As a reminder, do not start API or UI servers in the background. The local API and UI dev services are already running, and you can tail the logs at api.log and ui.log, as needed. The executor subagent can manually verify changes are working at http://localhost:3000 (web) or http://localhost:5173 (widget) with MCP Playwright.
 
 When you're finished, add to the very end of your implementation summary an extremely brief recommended Git commit message, based on the changes made. DO NOT say Generated with Claude Code. DO NOT say Co-Authored-By: Claude.

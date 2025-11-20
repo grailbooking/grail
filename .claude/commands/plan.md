@@ -11,7 +11,7 @@ Do not include plans for legacy fallback, unit tests or integration tests or exp
 Write a short overview of what you are about to do.
 Write function names and 1-3 sentences about what they do.
 
-As a reminder, do not start API or UI servers in the background. The local API and UI dev services are already running, and you can tail the logs at api.log and ui.log, as needed. The planner subagent can manually explore the app at http://localhost:5173 with MCP Playwright.
+As a reminder, do not start API or UI servers in the background. The local API and UI dev services are already running, and you can tail the logs at api.log and ui.log, as needed. The planner subagent can manually explore the app at http://localhost:3000 (web) or http://localhost:5173 (widget) with MCP Playwright.
 
 Do not write any code yet, just use the planner subagent come up with the ultrathink plan.
 
