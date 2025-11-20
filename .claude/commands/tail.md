@@ -1,0 +1,1 @@
+As a reminder, do not start API or UI servers in the background. The local API and UI dev services are already running, and you can tail the logs at api.log and ui.log, as needed.
