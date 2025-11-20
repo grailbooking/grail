@@ -4,6 +4,14 @@
 
 Point of Sales for Barbershops that does not instruct the barbershop on how it should run, but provides the tools that are required to run a good barbershop business.
 
+## Project Goal
+
+A **multi-tenant** barbershop booking + POS platform with:
+
+- **Web Client**: Mbile-first web app (calendar + queue, schedule overrides, POS), plus admin dashboardsfor setup, config, and reporting.
+- **Embeddable Web Client Widget**: ✅ Embeddable, frictionless booking widget (iframe) for shop websites.
+- **API**: Server-side functions for long running calls.
+
 ## Requirements
 
 * Client-facing  
@@ -13,6 +21,15 @@ Point of Sales for Barbershops that does not instruct the barbershop on how it s
   * Barber-facing Android / iOS app  
   * Backend dashboard web app for running reports  
 * Point of sale UI for checking out clients
+
+## Acceptance Criteria (MVP)
+
+- I can embed the **client widget** via iframe on any site, complete a booking without redirects.
+- A client can **join a waitlist** (card required), receive **SMS offer**, accept within default **1 hour**, and be booked.
+- A barber can apply **arbitrary schedule overrides** (open/close any time window) and see slots update in real-time.
+- **Checkout** shows discounted total largest; tips support **% presets, fixed $, custom**.
+- **1099** defaults to decentralized POS; **W-2** defaults to centralized; shop can reconfigure.
+- **Reports**: revenue by barber, total shop revenue, tips breakdown, client retention, no-show rate, utilization — with **CSV/PDF** aggregated exports.
 
 ## Market Competition
 
@@ -128,3 +145,100 @@ Barber-facing
   * Multiple use cases covered  
 * Native app development after concept proven  
 * Embedded widget remains core requirement for barbershop adoption
+
+## Cancellations / No-Shows (defaults, per-shop configurable)
+
+- Min notice: **24h**; Late cancel fee: **50%**; No-show: **100%**; Grace: **10 min**; Auto-charge: **true**.
+
+## Notifications
+
+- **Reminders**: per-shop schedule (default one at 24h). Channels enabled: **SMS + Email** (client can opt out; shop can require).
+- **Waitlist**: **SMS only** in MVP.
+- Push to be added when native apps exist.
+
+## Non-Goals for MVP
+
+- Inventory/retail tracking (phase 2)
+- Marketplace discovery of barbers/shops (off by default)
+- Multiple saved cards per client
+- Loyalty points/memberships
+- Native mobile apps
+- Multi-language (English only)
+- Push notifications
+
+## Exports
+
+- CSV/PDF for reports (aggregated metrics)
+- Client lists viewable in dashboard
+
+## Branding
+
+- Co-branded (platform footer).
+- Shop-configurable colors/logo/font.
+- Widget inherits host site fonts/colors via CSS vars with safe fallbacks.
+
+## Features
+
+### 1) Barber App (mobile-first web app)
+
+**Navigation** tabs: `Today`, `Calendar`, `Queue` (if walk-ins), `Clients`, `POS`.
+
+- **Today**: appointments list with quick actions (check-in, start, complete, no-show, rebook).
+- **Calendar**: day view with **swipe across days**; side-by-side multi-barber board (toggle) to see all bookings for the shop.
+- **Schedule Overrides**: **one-tap** actions + arbitrary time windows (open/close).
+- **POS** (if decentralized or allowed): scan/lookup appointment → add discounts/promo → tip → pay.
+- **Clients**: search, open profile, add notes/custom fields, set client-specific durations.
+
+### 2) Client Booking Widget (iframe, frictionless)
+
+Theming via querystring (`shop=<slug>`) and CSS variables.
+
+**Flow**:
+
+1. Select service → (optional) preferred barber (respect shop config; default to client’s preferred if any).
+2. Show earliest available timeslot (calendar-first); **no recurring bookings**.
+3. If no slots, offer **Join Waitlist** (requires card) with window (e.g., next 7 days).
+4. Confirm → Pay (prepay or in-person per shop config).
+5. Email receipt always.
+
+**Screens**:
+
+- `WidgetHome` (service picker)
+- `WidgetCalendar` (timeslot choose)
+- `WaitlistEnroll` (card check)
+- `Checkout` (discount code, tip if prepay)
+- `Confirmation`
+- `MyWaitlists` (view/withdraw)
+
+### 3) Owner/Manager Dashboard
+
+- **Onboarding Wizard (one-time)**:
+
+  - Walk-ins/appointments/both
+  - Receptionist?
+  - Workforce: W-2/1099/mixed → sets POS defaults (centralized for W-2, decentralized for 1099)
+  - Payment processor + payout mode (Shop vs Connect)
+  - Tipping timing (prepay vs in-person)
+  - Cancellation/no-show rules
+  - Reminder defaults
+  - Branding (logo/colors/font), iframe embed snippet generator
+
+- **Settings**: All above are editable here (no need to re-run wizard).
+
+- **Services & Pricing**: define services; choose unified vs barber-specific pricing; enable barber overrides.
+
+- **Promos**: create codes/campaigns.
+
+- **Reports (must-have)**:
+
+  - Revenue by barber
+  - Total shop revenue
+  - Tips breakdown
+  - Client retention (new vs returning)
+  - No-show rate
+  - Utilization (booked time ÷ available time)
+  - Export **CSV/PDF**, **aggregated only** (no PII in exports).
+
+- **Staff**: Invite users, assign roles (owner, manager, barber, frontdesk).
+
+- **Payouts**: Owner-only (bank accounts, Connect onboarding).
