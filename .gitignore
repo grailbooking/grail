@@ -253,3 +253,4 @@ packages/widget/dist/
 
 .claude/explorations/
 .claude/plans/
+.mcp.json
