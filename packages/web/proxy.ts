@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // Authentication stub - in production, verify Firebase auth token
   const authToken = request.cookies.get('auth-token');
 

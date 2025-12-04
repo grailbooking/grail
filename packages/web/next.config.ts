@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import path from 'path';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -9,6 +10,9 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   typedRoutes: true,
+  turbopack: {
+    root: path.join(__dirname, '../..'),
+  },
 };
 
 export default nextConfig;
