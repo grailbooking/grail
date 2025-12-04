@@ -22,7 +22,7 @@ A **multi-tenant** barbershop booking + POS platform with:
   * Backend dashboard web app for running reports  
 * Point of sale UI for checking out clients
 
-## Acceptance Criteria (MVP)
+## Acceptance Criteria
 
 - I can embed the **client widget** via iframe on any site, complete a booking without redirects.
 - A client can **join a waitlist** (card required), receive **SMS offer**, accept within default **1 hour**, and be booked.
@@ -135,7 +135,7 @@ Barber-facing
   * Configurable payment flow (prepay vs in-person, tip timing)  
   * Schedule flexibility for barbers
 
-### **MVP Approach**
+### **Approach**
 
 * Start with web-based responsive design  
   * Faster to prototype than native apps  
@@ -153,10 +153,9 @@ Barber-facing
 ## Notifications
 
 - **Reminders**: per-shop schedule (default one at 24h). Channels enabled: **SMS + Email** (client can opt out; shop can require).
-- **Waitlist**: **SMS only** in MVP.
-- Push to be added when native apps exist.
+- **Waitlist**: SMS only.
 
-## Non-Goals for MVP
+## Non-Goals
 
 - Inventory/retail tracking (phase 2)
 - Marketplace discovery of barbers/shops (off by default)
@@ -166,20 +165,20 @@ Barber-facing
 - Multi-language (English only)
 - Push notifications
 
-## MVP Scope Clarifications
+## Scope Clarifications
 
 ### Multi-Barber Tickets
 
-**MVP Scope:** 1 barber = 1 ticket.
+**Scope:** 1 barber = 1 ticket.
 
 Multi-barber tickets (where multiple barbers work on one client in a single transaction) are deferred. Each ticket is associated with exactly one barber for revenue and tip attribution.
 
 ### Real-Time Barber Status
 
-**MVP Scope:** Binary status only—**On Floor** or **Off Floor**.
+**Scope:** Binary status only—**On Floor** or **Off Floor**.
 
 - Primary use case: Walk-in queue management
-- No detailed statuses (e.g., "currently cutting", "cleaning", "on break") for MVP
+- No detailed statuses (e.g., "currently cutting", "cleaning", "on break")
 - Status affects queue rotation and availability for walk-ins
 
 ### Setup/Cleanup Buffers
