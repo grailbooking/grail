@@ -1,23 +1,59 @@
 import { Timestamp } from 'firebase-admin/firestore';
-export interface Shop {
-    id: string;
-    name: string;
-    slug: string;
-    address: string;
-    phone: string;
-    timezone: string;
-    settings: ShopSettings;
-    created_at: Timestamp;
-    updated_at: Timestamp;
+export interface ShopBranding {
+    logoUrl?: string;
+    primaryColor: string;
+    secondaryColor?: string;
+    font?: string;
 }
-export interface ShopSettings {
-    booking_enabled: boolean;
-    walk_ins_enabled: boolean;
-    waitlist_enabled: boolean;
-    cancellation_fee: number;
-    cancellation_hours: number;
-    slot_duration_minutes: number;
-    opening_hours: OpeningHours;
+export interface BookingSettings {
+    mode: 'appointments' | 'walkins' | 'both';
+    queueMode?: 'rotation' | 'fastest' | 'client_choice';
+    receptionist: boolean;
+    marketplaceEnabled: boolean;
+    widgetEmbedAllowed: boolean;
+}
+export interface PaymentSettings {
+    processor: 'stripe';
+    payoutMode: 'shop' | 'connect';
+    tipTiming: 'prepay' | 'in_person';
+    taxRate: number;
+    currency: string;
+    allowedMethods: Array<'card' | 'cash' | 'tap'>;
+}
+export interface WorkforceSettings {
+    type: 'w2' | '1099' | 'mixed';
+    businessModel: 'commission' | 'booth_rent' | 'hourly' | 'mixed';
+    tipDistribution: 'per_barber' | 'shared' | 'pooled';
+}
+export interface POSSettings {
+    mode: 'centralized' | 'decentralized' | 'configurable';
+}
+export interface CancellationPolicy {
+    minNoticeHours: number;
+    lateCancelPct: number;
+    noShowPct: number;
+    graceMin: number;
+    autoCharge: boolean;
+}
+export interface ReminderSettings {
+    defaultSchedule: string[];
+    channels: {
+        sms: boolean;
+        email: boolean;
+    };
+}
+export interface WaitlistSettings {
+    requiresCard: boolean;
+    defaultOfferExpiryMin: number;
+    remoteJoin: boolean;
+    maxQueueSize: number | null;
+    fifo: boolean;
+    confirmRequired: boolean;
+    notifyChannel: 'sms' | 'email' | 'both';
+}
+export interface ReportSettings {
+    exportsEnabled: boolean;
+    exportIncludesPII: boolean;
 }
 export interface OpeningHours {
     [day: string]: {
@@ -25,6 +61,30 @@ export interface OpeningHours {
         close: string;
         closed?: boolean;
     };
+}
+export interface Shop {
+    id: string;
+    name: string;
+    slug: string;
+    timezone: string;
+    address: string;
+    phone: string;
+    email?: string;
+    branding: ShopBranding;
+    bookingSettings: BookingSettings;
+    paymentSettings: PaymentSettings;
+    workforce: WorkforceSettings;
+    posSettings: POSSettings;
+    cancellationPolicy: CancellationPolicy;
+    reminders: ReminderSettings;
+    waitlist: WaitlistSettings;
+    pricingMode: 'unified' | 'barber_specific';
+    brandingMode: 'co_branded';
+    reports: ReportSettings;
+    openingHours: OpeningHours;
+    onboardingComplete: boolean;
+    created_at: Timestamp;
+    updated_at: Timestamp;
 }
 export interface Staff {
     id: string;
@@ -73,15 +133,6 @@ export interface Waitlist {
     slot_start?: Timestamp;
     slot_end?: Timestamp;
 }
-export interface Client {
-    id: string;
-    email: string;
-    name: string;
-    phone?: string;
-    notes?: string;
-    created_at: Timestamp;
-    updated_at: Timestamp;
-}
 export interface Availability {
     id: string;
     shop_id: string;
@@ -97,6 +148,15 @@ export interface TimeSlot {
     available: boolean;
     appointment_id?: string;
 }
+export interface Client {
+    id: string;
+    email: string;
+    name: string;
+    phone?: string;
+    notes?: string;
+    created_at: Timestamp;
+    updated_at: Timestamp;
+}
 export interface Payment {
     id: string;
     shop_id: string;
@@ -109,4 +169,14 @@ export interface Payment {
     created_at: Timestamp;
     updated_at: Timestamp;
 }
+export declare const DEFAULT_OPENING_HOURS: OpeningHours;
+export declare const DEFAULT_SHOP_BRANDING: ShopBranding;
+export declare const DEFAULT_BOOKING_SETTINGS: BookingSettings;
+export declare const DEFAULT_PAYMENT_SETTINGS: PaymentSettings;
+export declare const DEFAULT_WORKFORCE_SETTINGS: WorkforceSettings;
+export declare const DEFAULT_POS_SETTINGS: POSSettings;
+export declare const DEFAULT_CANCELLATION_POLICY: CancellationPolicy;
+export declare const DEFAULT_REMINDER_SETTINGS: ReminderSettings;
+export declare const DEFAULT_WAITLIST_SETTINGS: WaitlistSettings;
+export declare const DEFAULT_REPORT_SETTINGS: ReportSettings;
 //# sourceMappingURL=firestore-types.d.ts.map

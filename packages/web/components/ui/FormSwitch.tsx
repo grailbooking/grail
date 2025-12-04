@@ -24,17 +24,19 @@ export function FormSwitch({
     <label
       className={clsx(
         'flex items-start justify-between gap-4 py-3 cursor-pointer',
-        'group transition-colors duration-[var(--transition-fast)]',
-        disabled && 'opacity-50 cursor-not-allowed',
+        'group transition-colors duration-200',
+        'rounded-xl px-4 -mx-4',
+        'hover:bg-[var(--surface-hover)]',
+        disabled && 'opacity-50 cursor-not-allowed hover:bg-transparent',
         className
       )}
     >
-      <div className="flex flex-col gap-0.5">
+      <div className="flex flex-col gap-1">
         <span className="text-sm font-medium text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors">
           {label}
         </span>
         {description && (
-          <span className="text-xs text-[var(--text-muted)]">
+          <span className="text-xs text-[var(--text-muted)] max-w-sm">
             {description}
           </span>
         )}
@@ -45,20 +47,21 @@ export function FormSwitch({
         onCheckedChange={onCheckedChange}
         disabled={disabled}
         className={clsx(
-          'relative inline-flex h-6 w-11 shrink-0 rounded-full',
+          'relative inline-flex h-7 w-12 shrink-0 rounded-full',
           'border-2 border-transparent cursor-pointer',
-          'transition-colors duration-[var(--transition-fast)]',
+          'transition-all duration-200',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]',
           'disabled:cursor-not-allowed',
-          'data-[state=unchecked]:bg-[var(--border)]',
-          'data-[state=checked]:bg-[var(--accent)]'
+          'data-[state=unchecked]:bg-[var(--border-strong)]',
+          'data-[state=checked]:bg-[var(--accent)]',
+          'data-[state=checked]:shadow-[var(--shadow-gold)]'
         )}
       >
         <Switch.Thumb
           className={clsx(
-            'pointer-events-none block h-5 w-5 rounded-full',
-            'bg-[var(--text-primary)] shadow-lg',
-            'transition-transform duration-[var(--transition-fast)]',
+            'pointer-events-none block h-6 w-6 rounded-full',
+            'bg-white shadow-[var(--shadow-sm)]',
+            'transition-transform duration-200',
             'data-[state=unchecked]:translate-x-0',
             'data-[state=checked]:translate-x-5'
           )}

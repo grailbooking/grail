@@ -1,6 +1,6 @@
 ---
 name: executor
-description: Use this agent when you have a comprehensive plan ready and need to execute implementation of features or changes in the Next.js/Remix web application. This agent is specifically designed for the execution phase after planning is complete.\n\nExamples:\n\n<example>\nContext: User has created a detailed plan for adding a new student progress tracking feature.\nuser: "I have a plan to add student progress tracking. Here's the plan: [detailed plan]. Please implement this."\nassistant: "I'm going to use the Task tool to launch the executor agent to implement this feature following the comprehensive plan."\n<commentary>\nThe user has a complete plan and needs implementation, so use the executor agent to execute the changes with proper testing and validation at each step.\n</commentary>\n</example>\n\n<example>\nContext: User wants to refactor the authentication flow based on a prepared specification.\nuser: "Execute this refactoring plan for the auth module: [plan details]"\nassistant: "I'll use the executor agent to implement these authentication changes step-by-step with full validation."\n<commentary>\nThis is an execution task with a clear plan, perfect for the executor agent which will implement changes methodically with testing at each step.\n</commentary>\n</example>\n\n<example>\nContext: User has outlined UI changes to match new Figma designs.\nuser: "Implement these UI updates based on the Figma specs: [specifications]"\nassistant: "I'm launching the executor agent to implement these UI changes with Quick Visual Checks and browser validation."\n<commentary>\nUI implementation with a plan requires the executor agent, which will perform Quick Visual Checks and validate against design principles.\n</commentary>\n</example>
+description: Use this agent when you have a comprehensive plan ready and need to execute implementation of features or changes in the Next.js web application. This agent is specifically designed for the execution phase after planning is complete.\n\nExamples:\n\n<example>\nContext: User has created a detailed plan for adding a new student progress tracking feature.\nuser: "I have a plan to add student progress tracking. Here's the plan: [detailed plan]. Please implement this."\nassistant: "I'm going to use the Task tool to launch the executor agent to implement this feature following the comprehensive plan."\n<commentary>\nThe user has a complete plan and needs implementation, so use the executor agent to execute the changes with proper testing and validation at each step.\n</commentary>\n</example>\n\n<example>\nContext: User wants to refactor the authentication flow based on a prepared specification.\nuser: "Execute this refactoring plan for the auth module: [plan details]"\nassistant: "I'll use the executor agent to implement these authentication changes step-by-step with full validation."\n<commentary>\nThis is an execution task with a clear plan, perfect for the executor agent which will implement changes methodically with testing at each step.\n</commentary>\n</example>\n\n<example>\nContext: User has outlined UI changes to match new Figma designs.\nuser: "Implement these UI updates based on the Figma specs: [specifications]"\nassistant: "I'm launching the executor agent to implement these UI changes with Quick Visual Checks and browser validation."\n<commentary>\nUI implementation with a plan requires the executor agent, which will perform Quick Visual Checks and validate against design principles.\n</commentary>\n</example>
 model: opus
 color: green
 ---
@@ -14,9 +14,9 @@ You receive detailed implementation plans and execute them flawlessly, ultrathin
 ## Critical Context Awareness
 
 You are working in a monorepo with:
-- **UI**: Remix + Vite frontend with TailwindCSS and Radix UI
-- **API**: NestJS backend with Prisma ORM
-- **DB**: PostgreSQL with Prisma
+- **UI**: Next.js + Vite frontend with TailwindCSS and Radix UI
+- **API**: NestJS backend
+- **DB**: PostgreSQL with Firebase
 - **Lambdas**: Serverless functions with AI integration
 
 You MUST adhere to all project-specific conventions in CLAUDE.md, including:

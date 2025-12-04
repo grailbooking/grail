@@ -1,8 +1,11 @@
 'use client';
 
 import { useCallback } from 'react';
+import * as Checkbox from '@radix-ui/react-checkbox';
+import { CheckIcon } from '@radix-ui/react-icons';
 import clsx from 'clsx';
 import type { OpeningHours } from '@/lib/firestore-types';
+import { FormSelect } from './FormSelect';
 
 interface OpeningHoursEditorProps {
   value: OpeningHours;
@@ -12,24 +15,25 @@ interface OpeningHoursEditorProps {
 }
 
 const DAYS = [
-  { key: 'monday', label: 'Mon' },
-  { key: 'tuesday', label: 'Tue' },
-  { key: 'wednesday', label: 'Wed' },
-  { key: 'thursday', label: 'Thu' },
-  { key: 'friday', label: 'Fri' },
-  { key: 'saturday', label: 'Sat' },
-  { key: 'sunday', label: 'Sun' },
+  { key: 'monday', label: 'Monday', short: 'Mon' },
+  { key: 'tuesday', label: 'Tuesday', short: 'Tue' },
+  { key: 'wednesday', label: 'Wednesday', short: 'Wed' },
+  { key: 'thursday', label: 'Thursday', short: 'Thu' },
+  { key: 'friday', label: 'Friday', short: 'Fri' },
+  { key: 'saturday', label: 'Saturday', short: 'Sat' },
+  { key: 'sunday', label: 'Sunday', short: 'Sun' },
 ] as const;
 
 const TIME_OPTIONS = generateTimeOptions();
 
 function generateTimeOptions() {
-  const options: string[] = [];
+  const options: { value: string; label: string }[] = [];
   for (let hour = 0; hour < 24; hour++) {
     for (let minute = 0; minute < 60; minute += 30) {
       const h = hour.toString().padStart(2, '0');
       const m = minute.toString().padStart(2, '0');
-      options.push(`${h}:${m}`);
+      const value = `${h}:${m}`;
+      options.push({ value, label: formatTime(value) });
     }
   }
   return options;
@@ -83,25 +87,25 @@ export function OpeningHoursEditor({
   );
 
   return (
-    <div className={clsx('space-y-2', className)}>
+    <div className={clsx('space-y-1', className)}>
       {/* Header */}
-      <div className="grid grid-cols-[80px_1fr_1fr_60px] gap-2 pb-2 border-b border-[var(--border)]">
-        <div className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider">
+      <div className="grid grid-cols-[100px_1fr_1fr_70px] gap-3 pb-3 border-b border-[var(--border)]">
+        <div className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">
           Day
         </div>
-        <div className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider">
-          Open
+        <div className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">
+          Opens
         </div>
-        <div className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider">
-          Close
+        <div className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">
+          Closes
         </div>
-        <div className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider text-center">
+        <div className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider text-center">
           Closed
         </div>
       </div>
 
       {/* Days */}
-      {DAYS.map(({ key, label }) => {
+      {DAYS.map(({ key, label, short }) => {
         const dayData = value[key] || { open: '09:00', close: '18:00' };
         const isClosed = dayData.closed ?? false;
 
@@ -109,89 +113,62 @@ export function OpeningHoursEditor({
           <div
             key={key}
             className={clsx(
-              'grid grid-cols-[80px_1fr_1fr_60px] gap-2 items-center py-2',
-              'rounded-lg transition-colors duration-[var(--transition-fast)]',
-              isClosed && 'opacity-50'
+              'grid grid-cols-[100px_1fr_1fr_70px] gap-3 items-center py-2.5',
+              'rounded-lg transition-all duration-[var(--transition-fast)]',
+              'hover:bg-[var(--surface-hover)]',
+              '-mx-2 px-2',
+              isClosed && 'opacity-60'
             )}
           >
             {/* Day label */}
-            <div className="text-sm font-medium text-[var(--text-primary)]">
-              {label}
+            <div className="flex flex-col">
+              <span className="text-sm font-medium text-[var(--text-primary)]">
+                {short}
+              </span>
+              <span className="text-xs text-[var(--text-muted)] hidden sm:block">
+                {label}
+              </span>
             </div>
 
             {/* Open time */}
-            <select
+            <FormSelect
               value={dayData.open}
-              onChange={(e) => updateDay(key, 'open', e.target.value)}
+              onValueChange={(val) => updateDay(key, 'open', val)}
+              options={TIME_OPTIONS}
               disabled={disabled || isClosed}
-              className={clsx(
-                'px-2 py-1.5 rounded-md text-sm',
-                'bg-[var(--surface)] border border-[var(--border)]',
-                'text-[var(--text-primary)]',
-                'transition-colors duration-[var(--transition-fast)]',
-                'hover:border-[var(--text-muted)]',
-                'focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]',
-                'disabled:opacity-50 disabled:cursor-not-allowed'
-              )}
-            >
-              {TIME_OPTIONS.map((time) => (
-                <option key={time} value={time}>
-                  {formatTime(time)}
-                </option>
-              ))}
-            </select>
+              className="w-full"
+            />
 
             {/* Close time */}
-            <select
+            <FormSelect
               value={dayData.close}
-              onChange={(e) => updateDay(key, 'close', e.target.value)}
+              onValueChange={(val) => updateDay(key, 'close', val)}
+              options={TIME_OPTIONS}
               disabled={disabled || isClosed}
-              className={clsx(
-                'px-2 py-1.5 rounded-md text-sm',
-                'bg-[var(--surface)] border border-[var(--border)]',
-                'text-[var(--text-primary)]',
-                'transition-colors duration-[var(--transition-fast)]',
-                'hover:border-[var(--text-muted)]',
-                'focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]',
-                'disabled:opacity-50 disabled:cursor-not-allowed'
-              )}
-            >
-              {TIME_OPTIONS.map((time) => (
-                <option key={time} value={time}>
-                  {formatTime(time)}
-                </option>
-              ))}
-            </select>
+              className="w-full"
+            />
 
-            {/* Closed toggle */}
+            {/* Closed checkbox */}
             <div className="flex justify-center">
-              <button
-                type="button"
-                onClick={() => toggleClosed(key)}
+              <Checkbox.Root
+                checked={isClosed}
+                onCheckedChange={() => toggleClosed(key)}
                 disabled={disabled}
                 className={clsx(
-                  'w-6 h-6 rounded-md border',
-                  'transition-all duration-[var(--transition-fast)]',
-                  'focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2 focus:ring-offset-[var(--background)]',
+                  'w-6 h-6 rounded-md',
+                  'border-2 transition-all duration-[var(--transition-fast)]',
+                  'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]',
                   'disabled:opacity-50 disabled:cursor-not-allowed',
                   isClosed
                     ? 'bg-[var(--accent)] border-[var(--accent)]'
-                    : 'bg-transparent border-[var(--border)] hover:border-[var(--text-muted)]'
+                    : 'bg-transparent border-[var(--border-strong)] hover:border-[var(--accent)]'
                 )}
-                aria-label={isClosed ? 'Mark as open' : 'Mark as closed'}
+                aria-label={isClosed ? `${label} is closed, click to open` : `${label} is open, click to close`}
               >
-                {isClosed && (
-                  <svg
-                    className="w-4 h-4 mx-auto text-[var(--text-inverse)]"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={3}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-              </button>
+                <Checkbox.Indicator className="flex items-center justify-center">
+                  <CheckIcon className="w-4 h-4 text-[var(--text-inverse)]" />
+                </Checkbox.Indicator>
+              </Checkbox.Root>
             </div>
           </div>
         );

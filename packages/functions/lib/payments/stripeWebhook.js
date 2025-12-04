@@ -41,7 +41,7 @@ const https_1 = require("firebase-functions/v2/https");
 const logger = __importStar(require("firebase-functions/logger"));
 const stripe_1 = __importDefault(require("stripe"));
 const stripe = new stripe_1.default(process.env.STRIPE_SECRET_KEY || '', {
-    apiVersion: '2025-02-24.acacia',
+    apiVersion: '2025-11-17.clover',
 });
 exports.stripeWebhook = (0, https_1.onRequest)(async (req, res) => {
     const sig = req.headers['stripe-signature'];

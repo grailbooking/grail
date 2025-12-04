@@ -10,11 +10,12 @@ interface ThemeProviderProps {
 export function ThemeProvider({ children }: ThemeProviderProps) {
   return (
     <Theme
-      appearance="dark"
+      appearance="light"
       accentColor="amber"
       grayColor="sand"
       radius="medium"
       scaling="100%"
+      panelBackground="translucent"
     >
       {children}
     </Theme>
