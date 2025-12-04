@@ -1,4 +1,5 @@
 {
+  "model": "opus",
   "cleanupPeriodDays": 30,
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
