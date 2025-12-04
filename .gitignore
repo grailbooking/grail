@@ -250,3 +250,6 @@ packages/worker/certs/
 
 src/examples/
 packages/widget/dist/
+
+.claude/explorations/
+.claude/plans/

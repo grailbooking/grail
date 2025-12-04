@@ -9,7 +9,7 @@
   ],
   "env": {
     "PLAYWRIGHT_MCP_EXTENSION_TOKEN": "qlY4tVaCwNqGBSelpCLiDFcRDYXoxWNbgdFccXQ9o9E",
-    "MAX_MCP_OUTPUT_TOKENS": "100000"
+    "MAX_MCP_OUTPUT_TOKENS": "75000"
   },
   "permissions": {
     "defaultMode": "acceptEdits",
@@ -31,6 +31,6 @@
       "mcp__figma-desktop",
       "mcp__firebase",
       "mcp__playwright"
-    ],
+    ]
   }
 }
