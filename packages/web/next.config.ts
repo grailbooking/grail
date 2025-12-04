@@ -2,8 +2,9 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  output: 'export',
-  distDir: 'out',
+  // Static export mode - uncomment for production build
+  // output: 'export',
+  // distDir: 'out',
   images: {
     unoptimized: true,
   },

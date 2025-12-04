@@ -1,6 +1,6 @@
 import '@radix-ui/themes/styles.css';
 import './globals.css';
-import { Theme } from '@radix-ui/themes';
+import { ThemeProvider } from '@/components/ThemeProvider';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -14,11 +14,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <Theme accentColor="blue" grayColor="slate" radius="medium" scaling="100%">
-          {children}
-        </Theme>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
