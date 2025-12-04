@@ -166,6 +166,46 @@ Barber-facing
 - Multi-language (English only)
 - Push notifications
 
+## MVP Scope Clarifications
+
+### Multi-Barber Tickets
+
+**MVP Scope:** 1 barber = 1 ticket.
+
+Multi-barber tickets (where multiple barbers work on one client in a single transaction) are deferred. Each ticket is associated with exactly one barber for revenue and tip attribution.
+
+### Real-Time Barber Status
+
+**MVP Scope:** Binary status only—**On Floor** or **Off Floor**.
+
+- Primary use case: Walk-in queue management
+- No detailed statuses (e.g., "currently cutting", "cleaning", "on break") for MVP
+- Status affects queue rotation and availability for walk-ins
+
+### Setup/Cleanup Buffers
+
+Buffers add non-client-facing time before or after appointments to account for setup, cleanup, or transition time.
+
+**Key Requirements:**
+
+1. **Dual Buffer Types:**
+   - **Per-service buffers:** Service-specific setup/cleanup time (e.g., "Color processing needs 10 min cleanup")
+   - **Per-barber buffers:** Barber-specific transition time (e.g., "Marcus always takes 5 min between clients")
+
+2. **Invisible to Clients:**
+   - Clients see only the service duration (e.g., "Haircut: 30 min")
+   - Clients do **not** see buffer time (no "Haircut: 30 min + 10 min buffer")
+   - Slot availability accounts for buffers internally, but presentation is clean
+
+3. **Configuration Hierarchy:**
+   - **Shop owner** can configure default buffers per service and per barber
+   - **Barbers** can override their own buffers **if permitted by shop settings**
+   - Shop setting: `allowBarberBufferOverrides` (boolean) controls whether barbers can customize their own buffers
+
+4. **Calculation:**
+   - Total blocked time = service duration + service buffer + barber buffer
+   - Buffers are additive (both service buffer and barber buffer apply when present)
+
 ## Exports
 
 - CSV/PDF for reports (aggregated metrics)
